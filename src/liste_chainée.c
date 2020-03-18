@@ -192,17 +192,25 @@ void insertion(emprunt_t ** cour, emprunt_t * elt)
 /*               elt : pointeur sur une copie de l'emprunt à supprimer  */
 /* -------------------------------------------------------------------- */
 
-void supprElt(emprunt_t * cour, emprunt_t * elt)
+void supprElt(emprunt_t ** cour, emprunt_t * elt)
 {
     int num = elt->num;
     int date = elt->date;
-    emprunt_t * prec = NULL;
-    while( cour->num != num || cour->date != date)
-    {
+    emprunt_t ** prec = cour;
+    while( (*cour)->num != num || (*cour)->date != date)
+    { 
         prec = cour;
-        cour = cour->suiv;
+        cour = &((*cour)->suiv);
     }
-    emprunt_t * sup = cour;
-    prec->suiv = cour->suiv;
+    emprunt_t * sup = *cour;
+    if (prec == cour)
+    {
+        //cas du premier de la liste
+        *prec = (*cour)->suiv;
+    }
+    else
+    {
+        (*prec)->suiv = (*cour)->suiv;
+    }
     free(sup);
 }

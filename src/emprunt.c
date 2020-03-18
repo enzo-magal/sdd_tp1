@@ -84,7 +84,7 @@ emprunt_t * creerListeEmprunt(char * fichier, categorie_t * bibli)
 /*                  bibli : pointeur sur la bibliotheque                */
 /* -------------------------------------------------------------------- */
 
-void supprEmprunt(emprunt_t * deb_liste, char * fichier, categorie_t * bibli)
+void supprEmprunt(emprunt_t ** deb_liste, char * fichier, categorie_t * bibli)
 {
     int num = 0;
     int date = 0;
@@ -95,9 +95,10 @@ void supprEmprunt(emprunt_t * deb_liste, char * fichier, categorie_t * bibli)
         while(!feof(monFichier))
         {
             fscanf(monFichier, "%d", &num);
-            if(estPresentEmp(num,deb_liste) == 1)
+            fscanf(monFichier, "%d", &date);
+            if(estPresentEmp(num,*deb_liste) == 1)
             {
-                fscanf(monFichier, "%d", &date);
+                
                 emprunt_t * temp = malloc(sizeof(emprunt_t));
                 temp->num = num;
                 temp->date = date;
@@ -119,7 +120,7 @@ void supprEmprunt(emprunt_t * deb_liste, char * fichier, categorie_t * bibli)
         printf("fichier inexistant");
     }
 
-    if (deb_liste == NULL)
+    if (*deb_liste == NULL)
     {
         printf("Tout les emprunts ont été rendus \n\n");
     }

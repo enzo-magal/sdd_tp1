@@ -1,7 +1,7 @@
 #!/bin/makefile
 
 CC= gcc
-CFLAGS = -g -Wall -Wextra -pedantic -ansi -fPIE
+CFLAGS = -g -Wall -Wextra -pedantic -ansi -no-pie -fno-pie
 
 EXEC = tp1
 
@@ -12,7 +12,7 @@ SRCDIR = src
 SRC = $(wildcard $(SRCDIR)/*.c)
 
 all: $(BINDIR)/$(EXEC)
-	@echo Tapez bin/$(EXEC)
+	@echo Tapez ./bin/$(EXEC) \<fichier bibliotheque\> \<fichier création emprunt\> \<fichier suppression emprunt\>
 
 $(BINDIR)/$(EXEC) : $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
 	@mkdir -p $(BINDIR)

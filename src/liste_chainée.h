@@ -26,6 +26,6 @@ livre_t * trouveLivre(categorie_t * deb_bibli, int num);
 
 void insertion(emprunt_t ** cour, emprunt_t * elt);
 
-void supprElt(emprunt_t * cour,emprunt_t * elt);
+void supprElt(emprunt_t ** cour,emprunt_t * elt);
 
 #endif
