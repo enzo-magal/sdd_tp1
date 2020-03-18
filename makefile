@@ -1,7 +1,7 @@
 #!/bin/makefile
 
 CC= gcc
-CFLAGS = -g -Wall -Wextra -pedantic -ansi
+CFLAGS = -g -Wall -Wextra -pedantic -ansi -fPIE
 
 EXEC = tp1
 
@@ -20,7 +20,7 @@ $(BINDIR)/$(EXEC) : $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
 	
 $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	@$(CC) -o $@ -c $< 
+	@$(CC) -o $@ -c $<
 	
 clean :
 	rm -rf *.o
