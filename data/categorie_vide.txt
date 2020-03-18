@@ -1,0 +1,4 @@
+POL 0			
+BD 2
+21 tintin
+23 titeuf

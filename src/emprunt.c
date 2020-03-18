@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include "emprunt.h"
 
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KWHT  "\x1B[37m"
+#define KBLU  "\x1B[34m"
+
 /* -------------------------------------------------------------------- */
 /* afficherEmprunts        affiche la liste des emprunts                */
 /*                                                                      */
@@ -57,19 +62,25 @@ emprunt_t * creerListeEmprunt(char * fichier, categorie_t * bibli)
                 }
                 else
                 {
-                    printf("Emprunt en double !\n\n");
+                    printf(KRED);
+                    printf("Emprunt en double\n\n");
+                    printf(KWHT);
                 }
             }
             else
             {
-                printf("Le livre n'existe pas !\n\n");
+                printf(KRED);
+                printf("Le livre n'existe pas\n\n");
+                printf(KWHT);
             } 
         }
         fclose(monFichier);
     }
     else
     {
-        printf("fichier inexistant");
+        printf(KRED);
+        printf("Fichier inexistant\n\n");
+        printf(KWHT);    
     }
     return deb_liste;
 }
@@ -110,19 +121,25 @@ void supprEmprunt(emprunt_t ** deb_liste, char * fichier, categorie_t * bibli)
             }
             else
             {
-                printf("Livre non emprunté !\n\n");
+                printf(KRED);
+                printf("Livre non emprunté\n\n");
+                printf(KWHT);
             }
         }
         fclose(monFichier);
     }
     else
     {
-        printf("fichier inexistant");
+        printf(KRED);
+        printf("Fichier inexistant\n\n");
+        printf(KWHT);
     }
 
     if (*deb_liste == NULL)
     {
+        printf(KGRN);
         printf("Tout les emprunts ont été rendus \n\n");
+        printf(KWHT);
     }
 }
 
@@ -138,15 +155,23 @@ void supprEmprunt(emprunt_t ** deb_liste, char * fichier, categorie_t * bibli)
 
 void retourEmprunt(emprunt_t * cour, categorie_t * bibli, int date)
 {
-    printf("Il faudrait rendre les livres : \n\n");
+    int rendre_livre = 0;
     while (cour != NULL)
     {
         if (cour->date <= date)
         {
             livre_t * plivre = trouveLivre(bibli, cour->num);
             printf("%s\n", plivre->nom);
+            printf("Doit être rendu\n\n");
+            rendre_livre = 1;
         }
         cour = cour->suiv;
+    }
+    if (rendre_livre == 0)
+    {
+        printf(KGRN);
+        printf("Aucun livre à rendre\n\n");
+        printf(KWHT);
     }
 }
 
@@ -159,7 +184,7 @@ void retourEmprunt(emprunt_t * cour, categorie_t * bibli, int date)
 
 void nouvFichierEmprunt(emprunt_t * cour)
 {
-    FILE * monFichier = fopen("fichier_emprunt.txt", "w+");
+    FILE * monFichier = fopen("data/fichier_emprunt.txt", "w+");
     if (monFichier != NULL)
     {
         while (cour != NULL)
@@ -188,7 +213,9 @@ void nouvFichierEmprunt(emprunt_t * cour)
 void afficherRetour(emprunt_t * deb_liste, categorie_t * bibli)
 {
     int date_max = 0;
-    printf("date de retour max (AAAAMMJJ): ");
+    printf(KBLU);
+    printf("Date de retour max (AAAAMMJJ): ");
+    printf(KWHT);
     scanf("%d", &date_max);
     printf("\n\n");
     retourEmprunt(deb_liste, bibli, date_max);

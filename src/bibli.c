@@ -3,6 +3,10 @@
 #include <string.h>
 #include "bibli.h" 
 
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KWHT  "\x1B[37m"
+
 /* -------------------------------------------------------------------- */
 /* inserLivre     insère un livre dans une liste de livre               */
 /*                                                                      */
@@ -33,12 +37,21 @@ void inserLivre(livre_t ** prec_l,int num,char * nom)
 
 void afficherLivre(livre_t * cour)
 {
-    while(cour != NULL)
+    if (cour == NULL)
     {
-        printf("%d\n", cour->num);
-        printf("%s\n", cour->nom);
-        printf("%d\n\n", cour->emprunt);
-        cour = cour->suiv;
+        printf(KRED);
+        printf("Il n'y a pas de livre dans cette catégorie\n\n");
+        printf(KWHT);
+    }
+    else
+    {
+        while(cour != NULL)
+        {
+            printf("%d\n", cour->num);
+            printf("%s\n", cour->nom);
+            printf("%d\n\n", cour->emprunt);
+            cour = cour->suiv;
+        }
     }
 }
 
@@ -87,13 +100,21 @@ categorie_t * inserCategorie(categorie_t ** deb,char * nom)
 
 void afficherCategorie(categorie_t * cour)
 {
-    while(cour != NULL)
+    if (cour == NULL)
     {
-        printf("%s\n\n", cour->nom);
-        afficherLivre(cour->livre);
-        cour = cour->suiv;
+        printf(KRED);
+        printf("La bibliotheque n'existe pas\n\n");
+        printf(KWHT);
     }
-    
+    else
+    {
+        while(cour != NULL)
+        {
+            printf("%s\n\n", cour->nom);
+            afficherLivre(cour->livre);
+            cour = cour->suiv;
+        }
+    }
 }
 
 /* -------------------------------------------------------------------- */
@@ -173,6 +194,8 @@ void creationBibli(categorie_t ** prec_c, char * fichier)
     }
     else
     {
+        printf(KRED);
         printf("L'ouverture du fichier a échoué (fichier inexistant)\n\n");
+        printf(KWHT);
     }
 }

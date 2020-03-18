@@ -2,12 +2,16 @@
 #include <stdlib.h>
 #include "liste_chainée.h"
 
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KWHT  "\x1B[37m"
+
 /* -------------------------------------------------------------------- */
 /* estPresentLivre     verifie la presence d'un élément dans une        */
 /*                     bibliotheque                                     */
 /*                                                                      */
-/* En entrée :   num : le numéro du livre                               */
-/*               deb_bibli : pointeur sur la bibliotheque bibliothèque  */            
+/* En entrée :   num : le numéro du livre à rechercher                  */
+/*               deb_bibli : un pointeur sur la bibliotheque            */            
 /*                                                                      */
 /* En sortie :   p : un booléen permettant de vérifier la présence du   */ 
 /*                 livre recherché                                      */

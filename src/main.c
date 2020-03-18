@@ -37,22 +37,31 @@ int main(int argc, char ** argv)
             printf("Votre choix : ");
             printf(KWHT);
             scanf("%d", &choix);
+            printf("\n");
             switch(choix)
             {
                 case 1 : creationBibli(&bibli,argv[1]);
-                        printf(KGRN);
-                        printf("Creation de la bibliotheque effectuée\n\n");
-                        printf(KWHT);
                         if (bibli == NULL)
                         {
-                                printf("La bibliotheque est vide !\n");
+                                printf(KRED);
+                                printf("La bibliotheque n'existe pas\n\n");
+                                printf(KWHT);
+                        }
+                        else
+                        {
+                                printf(KGRN);
+                                printf("Creation de la bibliotheque effectuée\n\n");
+                                printf(KWHT);
                         }
                         break;
                 case 2 : afficherCategorie(bibli); break;
                 case 3 : emprunt = creerListeEmprunt(argv[2],bibli);
-                        printf(KGRN);
-                        printf("Creation emprunt effectuée\n\n");
-                        printf(KWHT);
+                        if (emprunt != NULL)
+                        {
+                                printf(KGRN);
+                                printf("Creation emprunt effectuée\n\n");
+                                printf(KWHT);
+                        }
                         break;
                 case 4 : supprEmprunt(&emprunt, argv[3], bibli);
                         printf(KGRN); 
@@ -67,17 +76,23 @@ int main(int argc, char ** argv)
                         printf(KWHT);
                         break;
                 case 8 : sortie = 1;
-                        printf(KBLU);
+                        printf(KYEL);
                         printf("Travail terminé !!!\n\n");
                         printf(KWHT);
                         break;
-                default : printf("Erreur dans le programme\n\n"); sortie = 1;
+                default : printf(KRED);
+                        printf("Erreur dans le programme\n\n");
+                        printf(KWHT);
+                        sortie = 1;
             }
         }
     }
     else
     {
-        printf("mauvais renseignement des noms de fichiers\n\n");    
+        printf("\n");
+        printf(KRED);
+        printf("Mauvais renseignement des noms de fichiers\n\n");
+        printf(KWHT);    
     }
     
     freeCategorie(bibli);
