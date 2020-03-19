@@ -10,7 +10,8 @@
 /* -------------------------------------------------------------------- */
 /* inserLivre     insère un livre dans une liste de livre               */
 /*                                                                      */
-/* En entrée :   prec_l : pointeur vers le premier livre de la liste    */
+/* En entrée :   prec_l : un double pointeur vers le premier livre de   */
+/*               la bibliothèque                                        */
 /*               num : le numéro du livre à insérer                     */
 /*               nom : le nom du livre à insérer                        */
 /* -------------------------------------------------------------------- */
@@ -32,7 +33,7 @@ void inserLivre(livre_t ** prec_l,int num,char * nom)
 /* -------------------------------------------------------------------- */
 /* afficherLivre     affiche la liste des livres                        */
 /*                                                                      */
-/* En entrée :   cour : pointeur vers le premier livre de la liste      */                                    
+/* En entrée :   cour : un pointeur sur le premier livre de la liste    */                                    
 /* -------------------------------------------------------------------- */
 
 void afficherLivre(livre_t * cour)
@@ -56,9 +57,9 @@ void afficherLivre(livre_t * cour)
 }
 
 /* -------------------------------------------------------------------- */
-/* freeLivre     libère l'espace occupé par une liste de livre          */
+/* freeLivre     libère l'espace occupé par une liste de livres         */
 /*                                                                      */
-/* En entrée :   cour : pointeur vers le premier livre de la liste      */
+/* En entrée :   cour : un pointeur sur le premier livre de la liste    */
 /* -------------------------------------------------------------------- */
 
 void freeLivre(livre_t * cour)
@@ -75,10 +76,10 @@ void freeLivre(livre_t * cour)
 /* -------------------------------------------------------------------- */
 /* inserCategorie     insère une categorie dans une bibliotheque        */
 /*                                                                      */
-/* En entrée :   deb : première catégorie de la bibliotheque            */
-/*               nom : nom de la catégorie à insérer                    */
+/* En entrée :   deb : un pointeur sur le début de la bibliotheque      */
+/*               nom : le nom de la catégorie à insérer                 */
 /*                                                                      */
-/* En sortie : nouv_c : pointeur vers la nouvelle catégorie créée       */
+/* En sortie : nouv_c : pointeur sur la nouvelle catégorie créée        */
 /* -------------------------------------------------------------------- */
 
 categorie_t * inserCategorie(categorie_t ** deb,char * nom)
@@ -125,7 +126,7 @@ void afficherCategorie(categorie_t * cour)
 
 void freeCategorie(categorie_t* cour)
 {       
-    categorie_t * suiv;
+    categorie_t * suiv = NULL;
     while(cour != NULL)
     {   
         suiv = cour->suiv;
@@ -155,8 +156,7 @@ void supprN(char * chaine)
 }
 
 /* -------------------------------------------------------------------- */
-/* creationBibli     creait une bibliothèque à partir d'un              */
-/*                          fichier texte                               */
+/* creationBibli     créé une bibliothèque à partir d'un fichier texte  */
 /*                                                                      */
 /* En entrée :   prec_c : un pointeur vers le premier élément de notre  */
 /*               bibliothèque                                           */

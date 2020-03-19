@@ -39,19 +39,19 @@ int estPresentLivre(int num, categorie_t * deb_bibli)
 }
 
 /* -------------------------------------------------------------------- */
-/* estPresentEmp     verifie la presence d'un élément dans une liste    */
+/* estPresentEmp     verifie la presence d'un emprunt dans une liste    */
 /*                                                                      */
-/* En entrée :   num : le numéro du livre                               */
-/*               debliste : pointeur sur la liste des emprunts          */          
+/* En entrée :   num : le numéro du livre emprunté à rechercher         */
+/*               deb_liste : un pointeur sur la liste des emprunts      */          
 /*                                                                      */
-/* En sortie :   p : un booléen permettant de vérifier la présence du   */ 
-/*                 livre recherché                                      */
+/* En sortie :   p : un booléen permettant de vérifier la présence de   */ 
+/*                 l'emprunt recherché                                  */
 /* -------------------------------------------------------------------- */
 
-int estPresentEmp(int num, emprunt_t * debliste)
+int estPresentEmp(int num, emprunt_t * deb_liste)
 {
     int p = 0;
-    emprunt_t * cour = debliste;
+    emprunt_t * cour = deb_liste;
     while (cour != NULL)
     {
         if (cour->num == num)
@@ -66,7 +66,7 @@ int estPresentEmp(int num, emprunt_t * debliste)
 /* -------------------------------------------------------------------- */
 /* freeListeEmprunt    libère l'espace occupé par une liste d'emprunts  */
 /*                                                                      */
-/* En entrée :     cour : pointeur sur le début de la liste des         */  
+/* En entrée :     cour : un pointeur sur le début de la liste des      */  
 /*                 emprunts                                             */
 /* -------------------------------------------------------------------- */
 
@@ -82,37 +82,35 @@ void freeListeEmprunt(emprunt_t * cour)
 }
 
 /* -------------------------------------------------------------------- */
-/* recherche        cherche le dernier emprunt avec une date inferieur  */
+/* recherche        cherche le dernier emprunt avec une date inferieure */
 /*                  à une date donnée                                   */
 /*                                                                      */
-/* En entrée :      debliste : la liste des emprunts                    */
-/*                  date : la date sous forme d'entier                  */
+/* En entrée :      deb_liste : un pointeur sur la liste des emprunts   */
+/*                  date : la date de l'emprunt recherché               */
 /*                                                                      */
-/* En sortie :      pt_retour : pointeur sur le suiv du dernier         */
-/*                  élément inférieur à date                            */
+/* En sortie :      pt_retour : un pointeur sur le suiv du dernier      */
+/*                  élément inférieur à la date donnée                  */
 /* -------------------------------------------------------------------- */
 
-emprunt_t ** recherche(emprunt_t * debliste, int date)
+emprunt_t ** recherche(emprunt_t * deb_liste, int date)
 {   
-    emprunt_t ** pt_retour = &debliste;
-    emprunt_t * cour = debliste;
-
+    emprunt_t ** pt_retour = &deb_liste;
+    emprunt_t * cour = deb_liste;
     while((cour->suiv) != NULL && (cour->suiv)->date < date)
     {
         pt_retour = &(cour->suiv);
         cour = cour->suiv;
     }
-    
     return pt_retour;
 }
 
 /* -------------------------------------------------------------------- */
-/* creationEmprunt     créait un élément emprunt                        */
+/* creationEmprunt     créé un emprunt                                  */
 /*                                                                      */
 /* En entrée :   num : le numéro du livre emprunté                      */
-/*               date : la date de retour du livre                      */
+/*               date : la date de l'emprunt                            */
 /*                                                                      */
-/* En sortie : nouv : pointeur vers l'emprunt créé                      */
+/* En sortie : nouv : un pointeur vers l'emprunt créé                   */
 /* -------------------------------------------------------------------- */
 
 emprunt_t * creationEmprunt(int num, int date)
@@ -130,13 +128,13 @@ emprunt_t * creationEmprunt(int num, int date)
 }
 
 /* -------------------------------------------------------------------- */
-/* trouveLivre     cherche le livre selon un numéro donné               */
+/* trouveLivre     cherche un livre selon un numéro donné               */
 /*                                                                      */
-/* En entrée :   deb_bibli : pointeur vers le début de la               */
+/* En entrée :   deb_bibli : un pointeur vers le début de la            */
 /*               bibliothèque                                           */
 /*               num : le numéro du livre recherché                     */
 /*                                                                      */
-/* En sortie : livre_trouve : pointeur vers le livre recherché          */
+/* En sortie : livre_trouve : un pointeur vers le livre trouvé          */
 /* -------------------------------------------------------------------- */
 
 livre_t * trouveLivre(categorie_t * deb_bibli, int num)
@@ -168,9 +166,9 @@ livre_t * trouveLivre(categorie_t * deb_bibli, int num)
 /* insertion     insere un nouvel élément dans une liste chainée        */
 /*               d'emprunt                                              */
 /*                                                                      */
-/* En entrée :  cour : pointeur sur le pointeur du début de la liste    */
-/*              chainée                                                 */
-/*              elt : le nouvel élément à inserer                       */
+/* En entrée :  cour : un pointeur sur le pointeur du début de la liste */
+/*              d'emprunts                                              */
+/*              elt : un pointeur sur l'emprunt à inserer               */
 /* -------------------------------------------------------------------- */
 
 void insertion(emprunt_t ** cour, emprunt_t * elt)
@@ -192,8 +190,10 @@ void insertion(emprunt_t ** cour, emprunt_t * elt)
 /* -------------------------------------------------------------------- */
 /* supprElt     supprime un élément d'une liste chainée d'emprunt       */
 /*                                                                      */
-/* En entrée :   cour : pointeur sur une le début d'emprunt             */
-/*               elt : pointeur sur une copie de l'emprunt à supprimer  */
+/* En entrée :   cour : un double pointeur sur le début de la liste     */
+/*               d'emprunts                                             */
+/*               elt : un pointeur sur une copie de l'emprunt à         */
+/*               supprimer                                              */
 /* -------------------------------------------------------------------- */
 
 void supprElt(emprunt_t ** cour, emprunt_t * elt)
@@ -207,9 +207,8 @@ void supprElt(emprunt_t ** cour, emprunt_t * elt)
         cour = &((*cour)->suiv);
     }
     emprunt_t * sup = *cour;
-    if (prec == cour)
+    if (prec == cour)            /*cas suppression en tête*/
     {
-        //cas du premier de la liste
         *prec = (*cour)->suiv;
     }
     else

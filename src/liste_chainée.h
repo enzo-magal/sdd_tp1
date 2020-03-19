@@ -14,11 +14,11 @@ struct emprunt
 
 int estPresentLivre(int num, categorie_t * deb_bibli);
 
-int estPresentEmp(int num, emprunt_t * debliste);
+int estPresentEmp(int num, emprunt_t * deb_liste);
 
 void freeListeEmprunt(emprunt_t * cour);
 
-emprunt_t ** recherche(emprunt_t * debliste, int date);
+emprunt_t ** recherche(emprunt_t * deb_liste, int date);
 
 emprunt_t * creationEmprunt(int num, int date);
 
